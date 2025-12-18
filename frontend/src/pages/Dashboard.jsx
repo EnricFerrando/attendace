@@ -9,15 +9,15 @@ const Dashboard = () => {
     const [hours, setHours] = useState('');
     const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem('user'));
-
     useEffect(() => {
-        if (!user) {
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+        if (!storedUser) {
             navigate('/login');
         } else {
             fetchStats();
             fetchSubjects();
         }
-    }, [user, navigate]);
+    }, [navigate]);
 
     const fetchStats = async () => {
         try {
@@ -107,6 +107,21 @@ const Dashboard = () => {
                                         <div className="text-sm text-gray-500 flex justify-between">
                                             <span>Missed: {stat.hoursMissed}h</span>
                                             <span>Total: {stat.totalHours}h</span>
+                                        </div>
+                                        <div className="mt-2 text-xs font-medium border-t pt-2">
+                                            {(() => {
+                                                const maxAllowed = stat.totalHours * 0.2;
+                                                const remaining = maxAllowed - stat.hoursMissed;
+                                                return remaining > 0 ? (
+                                                    <span className="text-indigo-600">
+                                                        Et queden <strong>{parseFloat(remaining.toFixed(1))}h</strong> fins al 20%
+                                                    </span>
+                                                ) : (
+                                                    <span className="text-red-600 font-bold">
+                                                        ⚠️ Has superat el límit del 20%
+                                                    </span>
+                                                );
+                                            })()}
                                         </div>
                                     </div>
                                 </div>

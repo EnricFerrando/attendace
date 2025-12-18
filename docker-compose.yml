@@ -1,0 +1,29 @@
+services:
+  frontend:
+    build: ./frontend
+    container_name: attendance-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - attendance-network
+
+  backend:
+    build: ./backend
+    container_name: attendance-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - MONGO_URI=mongodb+srv://enricnavarro00:Avemaria10@cluster0.984zwcx.mongodb.net/?appName=Cluster0
+      - JWT_SECRET=super_secret_key
+    networks:
+      - attendance-network
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+networks:
+  attendance-network:
+    driver: bridge

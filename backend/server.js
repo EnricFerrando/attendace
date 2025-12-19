@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 
-const MONGO_URI = "mongodb+srv://enricnavarro00:Avemaria10@cluster0.u9l6qji.mongodb.net/?appName=Cluster0";
+const MONGO_URI = ;
 
 dotenv.config();
 
